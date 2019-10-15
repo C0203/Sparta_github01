@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+		
+		<!-- Webpage Title -->
+    <title>Hello, world!</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		
+		<!-- JS -->		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <script>
+
+    function order(){
+      console.log("order");
+          // 읽기
+      let item = '고양이가 밟고 간 잔디밭';
+      let name = $('#posting-name').val();
+      let count =$('#posting-count').val();
+      let address = $('#posting-address').val();
+      let phone =$('#posting-phone').val();
+      // 우리가 크롬 콘솔창에서 썼던 그 코드!
+      $.ajax({
+        type: "POST", // POST 방식으로 요청하겠다.
+        url: "http://spartacodingclub.shop/order", // /post라는 url에 요청하겠다.
+        data: {name_give: name, address_give: address, count_give:count, phone_give:phone, item_give:item },
+        // 데이터를 주는 방법
+        success: function(response){ // 성공하면
+        if (response['result'] == 'success') {
+
+          alert('주문 성공!');
+          window.location.reload();
+
+          listing();
+
+        } else {
+          alert('서버오류!')
+        }
+      })
+    }
+   $(document).ready(function(){
+        $('#order-box').html('');
+        listing();
+      });
+
+  function listing(){
+    console.log("listing");
+      $.ajax({
+      type: "GET",
+      url:"http://spartacodingclub.shop/order?item_give=고양이가 밟고 간 잔디밭",
+      data: {},
+      success: function(response){
+        if (response['result'] == 'success'){
+          let orders = response['orders'];
+
+          for (let i = 0; i < orders.length; i++) {
+                make_card(orders[i]['item'], orders[i]['name'], orders[i]['count'],orders[i]['address'],orders[i]['phone'])
+          }
+        } else {
+          alert('기사를 받아오지 못했습니다.');
+        }
+      }            
+    })
+  }
+
+  function make_card(item, name, count, address, phone) {
+
+    let temp_html = '<tr>\
+      <td>'+item+'</td>\
+      <td>'+name+'</td>\
+      <td>'+count+'</td>\
+      <td>'+address+'</td>\
+      <td>'+phone+'</td>\
+    </tr>';
+    $('#order-box').append(temp_html);
+  }
+
+  </script>
+  </head>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  
+
+  img{
+    display: block; margin: 30px auto;
+    border: 0;
+  }
+
+  h1{
+    line-height: 2.0
+    font-weight: 800;
+  }
+
+  .yap{
+    text-align: center;
+
+  }
+
+  .price{
+    font-size: medium;
+    font-weight: 800;
+    line-height:5.0;
+  }
+
+  .bigname{
+    line-height: 2.0;
+  }
+
+  .container{
+    width: 750px
+
+  }
+      .wrap {
+      width: 900px;
+      margin: auto;
+</style>
+
+ <body>
+ <div class="wrap">
+      <img src="https://img.sbs.co.kr/newimg/news/20190424/201306673_700.jpg">
+      <div class="yap" >
+        <h1 id="postying-item" class="cat">고양이가 밟고 간 잔디밭</h1> 
+        <p>그 자체로도 영롱하고 고귀하며 살아 숨쉬는 존재 자체의 의의가 인간들에게 신의 존재이며<br> 빛이나는 고결한 미모를 가지고 계신 고양이님이 현현하여 고양이 발바닥을 통해 신의 은총을 인간들에게 내리나니 그 존재가 밟은 땅이다</p> 
+      </div>
+    <div class="container">
+        <div><SPAN class="price">가격 : 150,000,000</SPAN>
+<div class="input-group input-group-sm mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-sm">주문자 이름</span>
+  </div>
+  <input id="posting-name"  type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label id="posting-count" class="input-group-text" for="inputGroupSelect01">수량</label>
+  </div>
+  <select class="custom-select" id="inputGroupSelect01">
+    <option selected>Choose...</option>
+    <option value="1">고양이 발바닥만큼</option>
+    <option value="2">호랑이 발바닥만큼</option>
+    <option value="3">사람 발바닥만큼</option>
+  </select>
+</div>
+
+<div class="input-group input-group-sm mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-sm">주소</span>
+  </div>
+  <input id="posting-address" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+</div>
+
+<div class="input-group input-group-sm mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-sm">전화번호</span>
+  </div>
+  <input id="posting-phone" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+</div class="order">
+
+        <button type="button" onclick="order()" class="btn btn-primary">주문하기</button>
+       
+      </div>
+    </div>
+</div>
+<div class="orders">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">상품명</th>
+        <th scope="col">이름</th>
+        <th scope="col">수량</th>
+        <th scope="col">주소</th>
+        <th scope="col">전화번호</th>
+      </tr>
+    </thead>
+    <tbody id="order-box">
+      <tr>
+        <td>data</td>
+        <td>ㅇ</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  </body>
+</html>
