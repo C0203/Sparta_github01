@@ -45,8 +45,10 @@
         } else {
           alert('서버오류!')
         }
-      })
-    }
+      }
+    })
+  }
+
    $(document).ready(function(){
         $('#order-box').html('');
         listing();
@@ -66,7 +68,7 @@
                 make_card(orders[i]['item'], orders[i]['name'], orders[i]['count'],orders[i]['address'],orders[i]['phone'])
           }
         } else {
-          alert('기사를 받아오지 못했습니다.');
+          alert('주문 실패');
         }
       }            
     })
@@ -86,6 +88,7 @@
 
   </script>
   </head>
+
   <style>
   *{
     margin: 0;
