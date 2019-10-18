@@ -1,0 +1,42 @@
+
+  *{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  
+
+  img{
+    display: block; margin: 30px auto;
+    border: 0;
+  }
+
+  h1{
+    line-height: 2.0
+    font-weight: 800;
+  }
+
+  .yap{
+    text-align: center;
+
+  }
+
+  .price{
+    font-size: medium;
+    font-weight: 800;
+    line-height:5.0;
+  }
+
+  .bigname{
+    line-height: 2.0;
+  }
+
+  .container{
+    width: 750px
+
+  }
+      .wrap {
+      width: 900px;
+      margin: auto;
